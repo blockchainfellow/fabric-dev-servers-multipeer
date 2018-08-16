@@ -4,7 +4,7 @@
 
 ```
 sudo apt update && sudo apt upgrade
-sudo apt install git make gcc g++ libltdl-dev curl python pkg-config
+sudo apt install nano git make gcc g++ libltdl-dev curl python pkg-config
 ```
 
 ### Install Docker/ Docker Compose
@@ -55,6 +55,7 @@ curl -sSL https://goo.gl/byy2Qj | bash -s 1.0.4
 mkdir fabric-binaries
 mv bin fabric-binaries/bin
 echo 'export PATH=~/fabric-binaries/bin:$PATH' >> ~/.profile
+source ~/.profile
 git clone https://github.com/InflatibleYoshi/fabric-dev-servers-multipeer
 cd fabric-dev-servers-multipeer
 cd composer
