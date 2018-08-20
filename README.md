@@ -1,15 +1,23 @@
 # Multi Machine Fabric Setup: Org on each Machine
 
 
-### AWS Ubuntu
+### Launch AWS Ubuntu 18.04 
 
 ```
-Community AMI: ami-032ac327c5850744f
-Instance type: t2.xlarge 16GB
 
 ubuntu-minimal/images-testing/hvm-ssd/ubuntu-bionic-daily-amd64-minimal-20180810 - ami-032ac327c5850744f
 Canonical, Ubuntu, 18.04 LTS Minimal, UNSUPPORTED daily amd64 bionic minimal image built on 2018-08-10
 Root Device Type: ebs Virtualization type: hvm
+
+Community AMI: ami-032ac327c5850744f
+Instance type: t2.xlarge 16GB
+
+ssh -i "blockchain.pem" ubuntu@IP1
+
+Copying fabric-dev to IP2
+a. On Local: scp -i "blockchain.pem" blockchain.pem ubuntu@IP1:/home/ubuntu
+b. On IP1: scp -i "blockchain.pem" -r fabric-dev-servers-multipeer/ ubuntu@IP2:/home/ubuntu
+c. Enable the SG group on AWS to allow all.
 
 ```
 
