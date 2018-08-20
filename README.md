@@ -211,6 +211,8 @@ composer-rest-server
 
 composer-rest-server -c admin@tutorial-network -n never -w true
 
+http://IP1:3000/explorer/#/
+
 Sample request:
 
 {
@@ -219,6 +221,28 @@ Sample request:
   "newOwner": "JohnDoe",
   "timestamp": "2018-08-20T07:04:25.893Z"
 }
+
+
+```
+
+
+### Create Explorer
+
+```
+
+cd ~ 
+git clone https://github.com/hyperledger/blockchain-explorer.git
+cd blockchain-explorer/
+sudo apt install postgresql postgresql-contrib
+sudo -u postgres psql
+\i app/persistence/postgreSQL/db/explorerpg.sql
+\i app/persistence/postgreSQL/db/updatepg.sql
+\l
+\d
+\q
+
+
+
 
 
 ```
