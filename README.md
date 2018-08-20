@@ -74,6 +74,7 @@ make release
 ### Download the repo for Multi Org
 ```
 cd ~
+OLD
 curl -sSL https://goo.gl/byy2Qj | bash -s 1.2.0
 mkdir fabric-binaries
 mv bin fabric-binaries/bin
@@ -85,6 +86,23 @@ cd composer
 nano howtobuild.sh //Replace the IP addresses in HOST1 and HOST2 with your own IPs or FQDNs
 ./howtobuild.sh
 cd ../..
+
+
+
+NEW
+mkdir ~/fabric-dev-servers && cd ~/fabric-dev-servers
+curl -O https://raw.githubusercontent.com/hyperledger/composer-tools/master/packages/fabric-dev-servers/fabric-dev-servers.tar.gz
+tar -xvf fabric-dev-servers.tar.gz
+cd ~/fabric-dev-servers
+export FABRIC_VERSION=hlfv12
+./downloadFabric.sh
+
+```
+### Starting/stopping
+```
+cd ~/fabric-dev-servers
+export FABRIC_VERSION=hlfv12
+    
 ```
 
 At this point, if you have done these instructions for one machine, either duplicate your VM at this time or prepare another environment with the same steps as described so far until you get to git cloning this repo. Instead of cloning the repo, scp -r the fabric-dev-servers-multipeer folder from the first machine to the second.
