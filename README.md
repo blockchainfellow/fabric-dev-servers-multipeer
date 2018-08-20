@@ -46,7 +46,9 @@ echo 'export PATH=~/node/bin:$PATH' >> ~/.profile
 source ~/.profile
 npm install -g npm 
 npm install -g grpc
-npm install -g composer-cli@0.16.6 composer-playground@0.16.6 generator-hyperledger-composer@0.16.6
+npm install -g composer-cli@0.20 composer-playground@0.20 generator-hyperledger-composer@0.20
+npm install -g composer-rest-server@0.20
+npm install -g yo
 ```
 
 ### Install Go / Hyperledger Binaries
@@ -72,7 +74,7 @@ make release
 ### Download the repo for Multi Org
 ```
 cd ~
-curl -sSL https://goo.gl/byy2Qj | bash -s 1.0.4
+curl -sSL https://goo.gl/byy2Qj | bash -s 1.2.0
 mkdir fabric-binaries
 mv bin fabric-binaries/bin
 echo 'export PATH=~/fabric-binaries/bin:$PATH' >> ~/.profile
