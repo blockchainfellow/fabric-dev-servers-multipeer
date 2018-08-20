@@ -4,7 +4,8 @@
 ### AWS Ubuntu
 
 ```
-Instance type t2.xlarge
+Community AMI: ami-032ac327c5850744f
+Instance type: t2.xlarge 16GB
 
 ubuntu-minimal/images-testing/hvm-ssd/ubuntu-bionic-daily-amd64-minimal-20180810 - ami-032ac327c5850744f
 Canonical, Ubuntu, 18.04 LTS Minimal, UNSUPPORTED daily amd64 bionic minimal image built on 2018-08-10
