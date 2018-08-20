@@ -101,7 +101,8 @@ c. Enable the SG group on AWS to allow all.
 
 On the second machine run
 ```
-.startFabric-Peer2.sh
+cd ~/fabric-dev-servers-multipeer
+./startFabric-Peer2.sh
 ```
 
 After this continue on the first machine.
