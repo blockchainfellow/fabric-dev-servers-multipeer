@@ -24,8 +24,8 @@ c. Enable the SG group on AWS to allow all.
 #### Here are the full terminal instructions starting from a basic Ubuntu 18.04 install 
 
 ```
-sudo apt update && sudo apt upgrade
-sudo apt install nano git make gcc g++ libltdl-dev curl python pkg-config
+sudo apt update -y && sudo apt upgrade -y
+sudo apt install nano git make gcc g++ libltdl-dev curl python pkg-config -y
 ```
 
 ### Install Docker/ Docker Compose
@@ -43,7 +43,7 @@ wget https://nodejs.org/dist/v8.11.2/node-v8.11.2-linux-x64.tar.xz
 tar -xf node-v8.11.2-linux-x64.tar.xz 
 mv node-v8.11.2-linux-x64/ node/
 echo 'export PATH=~/node/bin:$PATH' >> ~/.profile
-source .profile
+source ~/.profile
 npm install -g npm 
 npm install -g grpc
 npm install -g composer-cli@0.16.6 composer-playground@0.16.6 generator-hyperledger-composer@0.16.6
