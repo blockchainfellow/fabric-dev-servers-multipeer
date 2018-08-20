@@ -1,5 +1,17 @@
 # Multi Machine Fabric Setup: Org on each Machine
 
+
+### AWS Ubuntu
+
+```
+Instance type t2.xlarge
+
+ubuntu-minimal/images-testing/hvm-ssd/ubuntu-bionic-daily-amd64-minimal-20180810 - ami-032ac327c5850744f
+Canonical, Ubuntu, 18.04 LTS Minimal, UNSUPPORTED daily amd64 bionic minimal image built on 2018-08-10
+Root Device Type: ebs Virtualization type: hvm
+
+```
+
 #### Here are the full terminal instructions starting from a basic Ubuntu 18.04 install 
 
 ```
