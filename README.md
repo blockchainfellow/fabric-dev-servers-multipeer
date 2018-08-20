@@ -95,7 +95,7 @@ On the first machine run
 Copying on second machine
 ```
 a. On Local: scp -i "blockchain.pem" blockchain.pem ubuntu@IP1:/home/ubuntu
-b. On IP1: scp -i "blockchain.pem" -r fabric-dev-servers-multipeer/ ubuntu@IP2:/home/ubuntu
+b. On IP1: cd ~ && scp -i "blockchain.pem" -r fabric-dev-servers-multipeer/ ubuntu@IP2:/home/ubuntu
 c. Enable the SG group on AWS to allow all.
 ```
 
