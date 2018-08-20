@@ -225,6 +225,64 @@ Sample request:
 
 ```
 
+
+### collections-network
+
+```
+/**
+ * My collections network
+ */
+namespace org.example.mynetwork
+asset Account identified by accountNumber {
+    o String accountNumber
+    o Double balance
+    o String status
+    o String dueDate
+    o Double minPay
+    --> Customer customer
+}
+participant Customer identified by customerId {
+    o String customerId
+    o String dateOfBirth
+}
+transaction makePayment {
+    --> Account account
+    --> Customer customer
+    o Double paymentAmt
+}
+
+/**
+ * Make payment
+ * @param {org.example.mynetwork.makePayment} tx - the customer to be processed
+ * @transaction
+ */
+async function makePayment(tx) {
+    let assetRegistry = await getAssetRegistry('org.example.mynetwork.Account');
+    tx.account.customer.accountNumber = tx.customer.customerId;
+    tx.account.balance = tx.account.balance - tx.paymentAmt;
+    tx.account.status = 'PAID';
+    await assetRegistry.update(tx.account);
+}
+
+composer archive create -t dir -n .
+composer network install --card PeerAdmin@hlfv1 --archiveFile collections-network@0.0.1.bna
+composer network start --networkName collections-network --networkVersion 0.0.1 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
+composer card import --file networkadmin.card
+composer network ping --card admin@collections-network 
+
+composer-rest-server -c admin@collections-network  -n never -w true
+
+{
+  "$class": "org.example.mynetwork.makePayment",
+  "account": "ACT1111",
+  "customer": "JohnDoe",
+  "paymentAmt": 1500,
+  "transactionId": "",
+  "timestamp": "2018-08-20T22:42:37.263Z"
+}
+
+```
+
 ### Create the Composer profile on the First Machine and start Composer Playground and Blockchain Explorer
 ```
 cd ~
