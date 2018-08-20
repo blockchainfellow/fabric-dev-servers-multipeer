@@ -196,6 +196,32 @@ composer network ping --card admin@tutorial-network
 
 ```
 
+### Generating REST server - https://hyperledger.github.io/composer/latest/tutorials/developer-tutorial.html
+
+```
+
+composer-rest-server
+
+? Enter the name of the business network card to use: admin@tutorial-network
+? Specify if you want namespaces in the generated REST API: never use namespaces
+? Specify if you want to use an API key to secure the REST API: No
+? Specify if you want to enable authentication for the REST API using Passport: No
+? Specify if you want to enable event publication over WebSockets: Yes
+? Specify if you want to enable TLS security for the REST API: No
+
+composer-rest-server -c admin@tutorial-network -n never -w true
+
+Sample request:
+
+{
+  "$class": "org.example.mynetwork.Trade",
+  "commodity": "IBM",
+  "newOwner": "JohnDoe",
+  "timestamp": "2018-08-20T07:04:25.893Z"
+}
+
+
+```
 
 
 
