@@ -74,22 +74,6 @@ make release
 ### Download the repo for Multi Org
 ```
 cd ~
-OLD
-curl -sSL https://goo.gl/byy2Qj | bash -s 1.2.0
-mkdir fabric-binaries
-mv bin fabric-binaries/bin
-echo 'export PATH=~/fabric-binaries/bin:$PATH' >> ~/.profile
-source ~/.profile
-git clone https://github.com/InflatibleYoshi/fabric-dev-servers-multipeer
-cd fabric-dev-servers-multipeer
-cd composer
-nano howtobuild.sh //Replace the IP addresses in HOST1 and HOST2 with your own IPs or FQDNs
-./howtobuild.sh
-cd ../..
-
-
-
-NEW
 mkdir ~/fabric-dev-servers && cd ~/fabric-dev-servers
 curl -O https://raw.githubusercontent.com/hyperledger/composer-tools/master/packages/fabric-dev-servers/fabric-dev-servers.tar.gz
 tar -xvf fabric-dev-servers.tar.gz
@@ -98,32 +82,53 @@ export FABRIC_VERSION=hlfv12
 ./downloadFabric.sh
 
 ```
+
 ### Starting/stopping
 ```
 cd ~/fabric-dev-servers
 export FABRIC_VERSION=hlfv12
-    
-```
-
-At this point, if you have done these instructions for one machine, either duplicate your VM at this time or prepare another environment with the same steps as described so far until you get to git cloning this repo. Instead of cloning the repo, scp -r the fabric-dev-servers-multipeer folder from the first machine to the second.
-
-On the first machine run
-```
 ./startFabric.sh
+./createPeerAdminCard.sh
 ```
 
-Copying on second machine
+### Start Composer Plaground
 ```
-a. On Local: scp -i "blockchain.pem" blockchain.pem ubuntu@IP1:/home/ubuntu
-b. On IP1: cd ~ && scp -i "blockchain.pem" -r fabric-dev-servers-multipeer/ ubuntu@IP2:/home/ubuntu
-c. Enable the SG group on AWS to allow all.
+nohup composer-playground -p 8181 &
+http://IP1:8181/
+
 ```
 
-On the second machine run
+### Create business network
+
 ```
-cd ~/fabric-dev-servers-multipeer
-./startFabric-Peer2.sh
+yo hyperledger-composer:businessnetwork
+
+? Business network name: tutorial-network
+? Description: Sample Network
+? Author name:  John Doe
+? Author email: johndoe@chain.com
+? License: Apache-2.0
+? Namespace: org.example.mynetwork
+
+Do you want to generate an empty template network? 
+No: generate a populated sample network
+
+   create package.json
+   create README.md
+   create models/org.example.mynetwork.cto
+   create permissions.acl
+   create .eslintrc.yml
+   create features/sample.feature
+   create features/support/index.js
+   create test/logic.js
+   create lib/logic.js
+   
+
+
 ```
+
+
+
 
 After this continue on the first machine.
 
