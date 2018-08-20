@@ -71,7 +71,7 @@ cd fabric
 make release
 ```
 
-### Download the repo for Multi Org
+### Download Fabric - https://hyperledger.github.io/composer/latest/installing/development-tools.html
 ```
 cd ~
 mkdir ~/fabric-dev-servers && cd ~/fabric-dev-servers
@@ -83,7 +83,7 @@ export FABRIC_VERSION=hlfv12
 
 ```
 
-### Starting/stopping
+### Starting/stopping 
 ```
 cd ~/fabric-dev-servers
 export FABRIC_VERSION=hlfv12
@@ -91,14 +91,14 @@ export FABRIC_VERSION=hlfv12
 ./createPeerAdminCard.sh
 ```
 
-### Start Composer Plaground
+### Start Composer Plaground 
 ```
 nohup composer-playground -p 8181 &
 http://IP1:8181/
 
 ```
 
-### Create business network
+### Create business network - https://hyperledger.github.io/composer/latest/tutorials/developer-tutorial.html
 
 ```
 yo hyperledger-composer:businessnetwork
@@ -122,8 +122,77 @@ No: generate a populated sample network
    create features/support/index.js
    create test/logic.js
    create lib/logic.js
-   
 
+cd tutorial-network
+
+vi models/org.example.mynetwork.cto
+/**
+ * My commodity trading network
+ */
+namespace org.example.mynetwork
+asset Commodity identified by tradingSymbol {
+    o String tradingSymbol
+    o String description
+    o String mainExchange
+    o Double quantity
+    --> Trader owner
+}
+participant Trader identified by tradeId {
+    o String tradeId
+    o String firstName
+    o String lastName
+}
+transaction Trade {
+    --> Commodity commodity
+    --> Trader newOwner
+}
+
+vi lib/logic.js
+/**
+ * Track the trade of a commodity from one trader to another
+ * @param {org.example.mynetwork.Trade} trade - the trade to be processed
+ * @transaction
+ */
+async function tradeCommodity(trade) {
+    trade.commodity.owner = trade.newOwner;
+    let assetRegistry = await getAssetRegistry('org.example.mynetwork.Commodity');
+    await assetRegistry.update(trade.commodity);
+}
+
+vi permissions.acl
+/**
+ * Access control rules for tutorial-network
+ */
+rule Default {
+    description: "Allow all participants access to all resources"
+    participant: "ANY"
+    operation: ALL
+    resource: "org.example.mynetwork.*"
+    action: ALLOW
+}
+
+rule SystemACL {
+  description:  "System ACL to permit all access"
+  participant: "ANY"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+Generate a business network archive
+composer archive create -t dir -n .
+
+Install the business network
+composer network install --card PeerAdmin@hlfv1 --archiveFile tutorial-network@0.0.1.bna
+
+Start the business network
+composer network start --networkName tutorial-network --networkVersion 0.0.1 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
+
+Import the network administrator identity as a usable business network card
+composer card import --file networkadmin.card
+
+Check that the business network has been deployed successfully,
+composer network ping --card admin@tutorial-network
 
 ```
 
