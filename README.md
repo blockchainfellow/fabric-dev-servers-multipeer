@@ -291,7 +291,7 @@ vi node_modules/webpack-dev-server/lib/Server.js (line 425):
 change to
 return true;
 
-
+nohup npm start &
 
 ```
 
