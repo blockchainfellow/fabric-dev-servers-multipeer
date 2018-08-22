@@ -270,7 +270,7 @@ composer network start --networkName collections-network --networkVersion 0.0.1 
 composer card import --file networkadmin.card
 composer network ping --card admin@collections-network 
 
-composer-rest-server -c admin@collections-network  -n never -w true
+nohup composer-rest-server -c admin@collections-network  -n never -w true & 
 
 {
   "$class": "org.example.mynetwork.makePayment",
@@ -282,6 +282,19 @@ composer-rest-server -c admin@collections-network  -n never -w true
 }
 
 ```
+
+### Start angular-app - https://hyperledger.github.io/composer/latest/tutorials/developer-tutorial.html
+```
+yo hyperledger-composer:angular
+
+vi node_modules/webpack-dev-server/lib/Server.js (line 425):
+change to
+return true;
+
+
+
+```
+
 
 ### Create the Composer profile on the First Machine and start Composer Playground and Blockchain Explorer
 ```
