@@ -295,6 +295,52 @@ nohup npm start &
 
 ```
 
+### Start composer in Docker
+
+```
+
+cd ~/fabric-dev-servers
+export FABRIC_VERSION=hlfv12
+./startFabric.sh
+./createPeerAdminCard.sh
+
+sudo apt install telnet
+sudo apt install iputils-ping
+
+Replace IP1 with your public/private IP
+
+PeerAdmin
+
+sed -e 's/localhost:7051/IP1:7051/' -e 's/localhost:7053/IP1:7053/' -e 's/localhost:7054/IP1:7054/'  -e 's/localhost:7050/IP1:7050/' < $HOME/.composer/cards/PeerAdmin@hlfv1/connection.json  > /tmp/connection.json && cp -p /tmp/connection.json $HOME/.composer/cards/PeerAdmin@hlfv1/
+
+Collections Network
+
+sed -e 's/localhost:7051/IP1:7051/' -e 's/localhost:7053/IP1:7053/' -e 's/localhost:7054/IP1:7054/'  -e 's/localhost:7050/IP1:7050/' < $HOME/.composer/cards/admin@collections-network/connection.json  > /tmp/connection.json && cp -p /tmp/connection.json $HOME/.composer/cards/admin@collections-network/
+
+composer network install --card PeerAdmin@hlfv1 --archiveFile collections-network@0.0.1.bna
+composer network start --networkName collections-network --networkVersion 0.0.1 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
+composer card import --file networkadmin.card
+composer network ping --card admin@collections-network 
+
+composer network list -c admin@collections-network
+composer network ping -c admin@collections-network
+
+Tutorial Network
+
+sed -e 's/localhost:7051/IP1:7051/' -e 's/localhost:7053/IP1:7053/' -e 's/localhost:7054/IP1:7054/'  -e 's/localhost:7050/IP1:7050/' < $HOME/.composer/cards/admin@tutorial-network/connection.json  > /tmp/connection.json && cp -p /tmp/connection.json $HOME/.composer/cards/admin@tutorial-network/
+
+composer network install --card PeerAdmin@hlfv1 --archiveFile tutorial-network@0.0.1.bna
+composer network start --networkName tutorial-network --networkVersion 0.0.1 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
+composer card import --file networkadmin.card
+composer network ping --card admin@tutorial-network 
+
+docker rm composer-playground
+docker run --name composer-playground -v ~/.composer:/home/composer/.composer --publish 80:8080 hyperledger/composer-playground
+
+References:
+https://medium.com/coinmonks/installing-hyperledger-composer-playground-58ad359d4a2f
+https://hyperledger.github.io/composer/latest/tutorials/google_oauth2_rest
+```
 
 ### Create the Composer profile on the First Machine and start Composer Playground and Blockchain Explorer
 ```
