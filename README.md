@@ -337,9 +337,14 @@ composer network ping --card admin@tutorial-network
 docker rm composer-playground
 docker run --name composer-playground -v ~/.composer:/home/composer/.composer --publish 80:8080 hyperledger/composer-playground
 
+Run on background:
+docker run --name composer-playground -v ~/.composer:/home/composer/.composer --publish 80:8080 --detach hyperledger/composer-playground
+
 References:
 https://medium.com/coinmonks/installing-hyperledger-composer-playground-58ad359d4a2f
 https://hyperledger.github.io/composer/latest/tutorials/google_oauth2_rest
+https://stackoverflow.com/questions/50739551/running-composer-playground-in-docker-container-doesnt-connect-to-fabric-networ?newreg=f237a94fc58b40e8bfbebd8dd817a2e0
+
 ```
 
 ### Create the Composer profile on the First Machine and start Composer Playground and Blockchain Explorer
