@@ -24,7 +24,8 @@ c. Enable the SG group on AWS to allow all.
 #### Here are the full terminal instructions starting from a basic Ubuntu 18.04 install 
 
 ```
-sudo apt update -y && sudo apt upgrade -y
+DO NOT UPGRADE FOR NOW: sudo apt update -y && sudo apt upgrade -y
+sudo apt update -y
 sudo apt install nano git make gcc g++ libltdl-dev curl python pkg-config -y
 ```
 
