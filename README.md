@@ -90,6 +90,15 @@ nano howtobuild.sh //Replace the IP addresses in HOST1 and HOST2 with your own I
 cd ../..
 ```
 
+### Ensire to edit the security groups in AWS to allow inbound access
+
+```
+Allow TCP ALL for now from Anywhere - For POC purpose
+
+```
+
+### Starting Fabric
+
 At this point, if you have done these instructions for one machine, either duplicate your VM at this time or prepare another environment with the same steps as described so far until you get to git cloning this repo. Instead of cloning the repo, scp -r the fabric-dev-servers-multipeer folder from the first machine to the second.
 
 On the first machine run
