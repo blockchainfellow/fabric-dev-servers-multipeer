@@ -133,6 +133,48 @@ git checkout release-3
 ```
 Edit config.json with the correct tlscerts path. You do not need them functionally but they are there because there have been reported issues when not including the tls certs.
 ```
+
+config.json
+
+{
+        "network-config": {
+                "org1": {
+                        "name": "org1",
+                        "mspid" : "Org1MSP",
+                        "peer0": {
+                                "requests": "grpc://localhost:7051",
+                                "events": "grpc://localhost:7053",
+                                "server-hostname": "peer0.org1.example.com",
+                                "tls_cacerts": "/home/ubuntu/fabric-dev-servers/fabric-scripts/hlfv12/composer/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
+                        },
+                        "admin": {
+                                "key": "/home/ubuntu/fabric-dev-servers/fabric-scripts/hlfv12/composer/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore",
+                                "cert": "/home/ubuntu/fabric-dev-servers/fabric-scripts/hlfv12/composer/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts"
+                        }
+                }
+
+        },
+        "host": "localhost",
+        "port": "8080",
+        "channel": "composerchannel",
+        "keyValueStore": "/tmp/fabric-client-kvs",
+        "eventWaitTime": "30000",
+        "users":[
+                {
+                   "username":"admin",
+                   "secret":"adminpw"
+                }
+         ],
+        "pg": {
+                "host": "127.0.0.1",
+                "port": "5432",
+                "database": "fabricexplorer",
+                "username": "hppoc",
+                "passwd": "password"
+        },
+        "license": "Apache-2.0"
+}
+
 sudo -u postgres psql
 \i app/db/explorerpg.sql
 \q
