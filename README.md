@@ -70,7 +70,7 @@ cd fabric
 make release
 ```
 
-### Download the repo for Multi Org
+### On both IP - IP1 and IP2
 ```
 cd ~
 curl -sSL https://goo.gl/byy2Qj | bash -s 1.0.4
@@ -78,6 +78,10 @@ mkdir fabric-binaries
 mv bin fabric-binaries/bin
 echo 'export PATH=~/fabric-binaries/bin:$PATH' >> ~/.profile
 source ~/.profile
+
+```
+### On IP1 only
+```
 git clone https://github.com/InflatibleYoshi/fabric-dev-servers-multipeer
 cd fabric-dev-servers-multipeer
 cd composer
