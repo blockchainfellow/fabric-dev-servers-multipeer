@@ -156,28 +156,28 @@ Edit config.json with the correct tlscerts path. You do not need them functional
 
 $ nano config.json
 
-cat config.json
+cat <<EOF >>config.json
 {
 	"network-config": {
 		"org1": {
 			"name": "org1",
 			"mspid" : "Org1MSP",
 			"peer0": {
-				"requests": "grpc://IP1:7051",
-				"events": "grpc://IP1:7053",
+				"requests": "grpc://IP-HOST-1:7051",
+				"events": "grpc://IP-HOST-1:7053",
 				"server-hostname": "peer0.org1.example.com",
 				"tls_cacerts": "/home/ubuntu/fabric-dev-servers-multipeer/composer/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
 			},
 			"peer1": {
-				"requests": "grpc://IP1:8051",
-				"events": "grpc://IP1:8053",
+				"requests": "grpc://IP-HOST-1:8051",
+				"events": "grpc://IP-HOST-1:8053",
 				"server-hostname": "peer1.org1.example.com",
 				"tls_cacerts": "/home/ubuntu/fabric-dev-servers-multipeer/composer/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt"
 
 			},
 			"peer2": {
-				"requests": "grpc://IP1:9051",
-                                "events": "grpc://IP1:9053",
+				"requests": "grpc://IP-HOST-1:9051",
+                                "events": "grpc://IP-HOST-1:9053",
                                 "server-hostname": "peer2.org1.example.com",
 				"tls_cacerts": "/home/ubuntu/fabric-dev-servers-multipeer/composer/crypto-config/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/tls/ca.crt"
 			},
@@ -190,20 +190,20 @@ cat config.json
 			"name": "org2",
 			"mspid" : "Org2MSP",
 			"peer0": {
-				"requests": "grpc://IP2:10051",
-				"events": "grpc://IP2:10053",
+				"requests": "grpc://IP-HOST-2:10051",
+				"events": "grpc://IP-HOST-2:10053",
 				"server-hostname": "peer0.org2.example.com",
 				"tls_cacerts": "/home/ubuntu/fabric-dev-servers-multipeer/composer/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt"
 			},
 			"peer1": {
-				"requests": "grpc://IP2:11051",
-				"events": "grpc://IP2:11053",
+				"requests": "grpc://IP-HOST-2:11051",
+				"events": "grpc://IP-HOST-2:11053",
 				"server-hostname": "peer1.org2.example.com",
 				"tls_cacerts": "/home/ubuntu/fabric-dev-servers-multipeer/composer/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls/ca.crt"
 			},
                         "peer2": {
-                                "requests": "grpc://IP2:12051",
-                                "events": "grpc://IP2:12053",
+                                "requests": "grpc://IP-HOST-2:12051",
+                                "events": "grpc://IP-HOST-2:12053",
                                 "server-hostname": "peer2.org2.example.com",
 				"tls_cacerts": "/home/ubuntu/fabric-dev-servers-multipeer/composer/crypto-config/peerOrganizations/org2.example.com/peers/peer2.org2.example.com/tls/ca.crt"
                         },
@@ -214,7 +214,7 @@ cat config.json
 		}
 	},
 	"host": "localhost",
-	"port": "8080",
+	"port": "8181",
 	"channel": "composerchannel",
 	"keyValueStore": "/tmp/fabric-client-kvs",
 	"eventWaitTime": "30000",
@@ -233,6 +233,7 @@ cat config.json
 	},
 	"license": "Apache-2.0"
 }
+EOF
 ```
 
 ### Import sql file and start the explorer
