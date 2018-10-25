@@ -82,15 +82,17 @@ source ~/.profile
 ```
 ### On IP1 only
 ```
-git clone https://github.com/InflatibleYoshi/fabric-dev-servers-multipeer
+cd ~
+git clone https://github.com/blockchainfellow/fabric-dev-servers-multipeer
 cd fabric-dev-servers-multipeer
 cd composer
-nano howtobuild.sh //Replace the IP addresses in HOST1 and HOST2 with your own IPs or FQDNs
+
+$ nano howtobuild.sh //Replace the IP addresses in HOST1 and HOST2 with your own IPs or FQDNs
 ./howtobuild.sh
 cd ../..
 ```
 
-### Ensire to edit the security groups in AWS to allow inbound access
+### Ensure to edit the security groups in AWS to allow inbound/outbound access
 
 ```
 Allow TCP ALL for now from Anywhere - For POC purpose
@@ -103,6 +105,7 @@ At this point, if you have done these instructions for one machine, either dupli
 
 On the first machine run
 ```
+cd ~/fabric-dev-servers-multipeer
 ./startFabric.sh
 ```
 
@@ -111,6 +114,8 @@ Copying on second machine
 a. On Local: scp -i "blockchain.pem" blockchain.pem ubuntu@IP1:/home/ubuntu
 b. On IP1: cd ~ && scp -i "blockchain.pem" -r fabric-dev-servers-multipeer/ ubuntu@IP2:/home/ubuntu
 c. Enable the SG group on AWS to allow all.
+
+
 ```
 
 On the second machine run
@@ -121,59 +126,118 @@ cd ~/fabric-dev-servers-multipeer
 
 After this continue on the first machine.
 
-### Create the Composer profile on the First Machine and start Composer Playground and Blockchain Explorer
+### Create the Composer profile on the First Machine and start Composer Playground
 ```
+cd ~/fabric-dev-servers-multipeer
 ./createPeerAdminCard.sh
 nohup composer-playground -p 8181 &
-cd ..
-git clone https://github.com/InflatibleYoshi/blockchain-explorer
-sudo apt install postgresql postgresql-contrib
+
+Open in your browser http://IP1:8181
+
+```
+
+### Hyperledger Blockchain Explorer
+
+```
+
+Install dependencies and setup time
+sudo apt install postgresql postgresql-contrib 
+
+cd ~
+git clone https://github.com/blockchainfellow/blockchain-explorer
 cd blockchain-explorer
 git checkout release-3
 ```
+
+### Edit config.json
+
+```
 Edit config.json with the correct tlscerts path. You do not need them functionally but they are there because there have been reported issues when not including the tls certs.
+
+$ nano config.json
+
+cat config.json
+{
+	"network-config": {
+		"org1": {
+			"name": "org1",
+			"mspid" : "Org1MSP",
+			"peer0": {
+				"requests": "grpc://IP1:7051",
+				"events": "grpc://IP1:7053",
+				"server-hostname": "peer0.org1.example.com",
+				"tls_cacerts": "/home/ubuntu/fabric-dev-servers-multipeer/composer/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
+			},
+			"peer1": {
+				"requests": "grpc://IP1:8051",
+				"events": "grpc://IP1:8053",
+				"server-hostname": "peer1.org1.example.com",
+				"tls_cacerts": "/home/ubuntu/fabric-dev-servers-multipeer/composer/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt"
+
+			},
+			"peer2": {
+				"requests": "grpc://IP1:9051",
+                                "events": "grpc://IP1:9053",
+                                "server-hostname": "peer2.org1.example.com",
+				"tls_cacerts": "/home/ubuntu/fabric-dev-servers-multipeer/composer/crypto-config/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/tls/ca.crt"
+			},
+			"admin": {
+				"key": "/home/ubuntu/fabric-dev-servers-multipeer/composer/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore",
+				"cert": "/home/ubuntu/fabric-dev-servers-multipeer/composer/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts"
+			}
+		},
+		"org2": {
+			"name": "org2",
+			"mspid" : "Org2MSP",
+			"peer0": {
+				"requests": "grpc://IP2:10051",
+				"events": "grpc://IP2:10053",
+				"server-hostname": "peer0.org2.example.com",
+				"tls_cacerts": "/home/ubuntu/fabric-dev-servers-multipeer/composer/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt"
+			},
+			"peer1": {
+				"requests": "grpc://IP2:11051",
+				"events": "grpc://IP2:11053",
+				"server-hostname": "peer1.org2.example.com",
+				"tls_cacerts": "/home/ubuntu/fabric-dev-servers-multipeer/composer/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls/ca.crt"
+			},
+                        "peer2": {
+                                "requests": "grpc://IP2:12051",
+                                "events": "grpc://IP2:12053",
+                                "server-hostname": "peer2.org2.example.com",
+				"tls_cacerts": "/home/ubuntu/fabric-dev-servers-multipeer/composer/crypto-config/peerOrganizations/org2.example.com/peers/peer2.org2.example.com/tls/ca.crt"
+                        },
+			"admin": {
+				"key": "/home/ubuntu/fabric-dev-servers-multipeer/composer/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore",
+				"cert": "/home/ubuntu/fabric-dev-servers-multipeer/composer/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts"
+			}
+		}
+	},
+	"host": "localhost",
+	"port": "8080",
+	"channel": "composerchannel",
+	"keyValueStore": "/tmp/fabric-client-kvs",
+	"eventWaitTime": "30000",
+	"users":[
+		{
+		   "username":"admin",
+		   "secret":"adminpw"
+		}
+	 ],
+	"pg": {
+		"host": "127.0.0.1",
+		"port": "5432",
+		"database": "fabricexplorer",
+		"username": "hppoc",
+		"passwd": "password"
+	},
+	"license": "Apache-2.0"
+}
 ```
 
-config.json
+### Import sql file and start the explorer
 
-{
-        "network-config": {
-                "org1": {
-                        "name": "org1",
-                        "mspid" : "Org1MSP",
-                        "peer0": {
-                                "requests": "grpc://localhost:7051",
-                                "events": "grpc://localhost:7053",
-                                "server-hostname": "peer0.org1.example.com",
-                                "tls_cacerts": "/home/ubuntu/fabric-dev-servers/fabric-scripts/hlfv12/composer/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
-                        },
-                        "admin": {
-                                "key": "/home/ubuntu/fabric-dev-servers/fabric-scripts/hlfv12/composer/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore",
-                                "cert": "/home/ubuntu/fabric-dev-servers/fabric-scripts/hlfv12/composer/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts"
-                        }
-                }
-
-        },
-        "host": "localhost",
-        "port": "8080",
-        "channel": "composerchannel",
-        "keyValueStore": "/tmp/fabric-client-kvs",
-        "eventWaitTime": "30000",
-        "users":[
-                {
-                   "username":"admin",
-                   "secret":"adminpw"
-                }
-         ],
-        "pg": {
-                "host": "127.0.0.1",
-                "port": "5432",
-                "database": "fabricexplorer",
-                "username": "hppoc",
-                "passwd": "password"
-        },
-        "license": "Apache-2.0"
-}
+```
 
 sudo -u postgres psql
 \i app/db/explorerpg.sql
