@@ -152,7 +152,7 @@ git checkout release-3
 ### Edit config.json
 
 ```
-Edit config.json with the correct tlscerts path. You do not need them functionally but they are there because there have been reported issues when not including the tls certs.
+Edit/remove config.json with the correct tlscerts path. You do not need them functionally but they are there because there have been reported issues when not including the tls certs.
 
 $ nano config.json
 
@@ -213,7 +213,7 @@ $ nano config.json
 		}
 	},
 	"host": "localhost",
-	"port": "8181",
+	"port": "8080",
 	"channel": "composerchannel",
 	"keyValueStore": "/tmp/fabric-client-kvs",
 	"eventWaitTime": "30000",
@@ -235,15 +235,18 @@ $ nano config.json
 
 ```
 
+Replace the IPs
+
+```
 HOST1="IP1"
 HOST2="IP2"
 sed -i -e "s/IP-HOST-1/$HOST1/g" config.json
 sed -i -e "s/IP-HOST-2/$HOST2/g" config.json
+```
 
 ### Import sql file and start the explorer
 
 ```
-
 sudo -u postgres psql
 \i app/db/explorerpg.sql
 \q
@@ -257,6 +260,7 @@ npm test -- -u –coverage
 npm run build
 cd ..
 ./start.sh
-```
 
 At this point you should be able to navigate a browser to http:/{HOST1-DOMAIN/IP}:8080 and connect to either alice or bob's trade network instances.
+
+```
