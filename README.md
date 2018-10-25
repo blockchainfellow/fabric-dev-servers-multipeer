@@ -156,7 +156,6 @@ Edit config.json with the correct tlscerts path. You do not need them functional
 
 $ nano config.json
 
-cat <<EOF >>config.json
 {
 	"network-config": {
 		"org1": {
@@ -233,8 +232,13 @@ cat <<EOF >>config.json
 	},
 	"license": "Apache-2.0"
 }
-EOF
+
 ```
+
+HOST1="IP1"
+HOST2="IP2"
+sed -i -e "s/IP-HOST-1/$HOST1/g" config.json
+sed -i -e "s/IP-HOST-2/$HOST2/g" config.json
 
 ### Import sql file and start the explorer
 
